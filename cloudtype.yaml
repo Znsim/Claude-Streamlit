@@ -1,0 +1,25 @@
+name: claude-streamlit
+app: python@3.12
+
+resources:
+  spot: true
+  memory: 0.5
+
+options:
+  ports:
+    - port: 8000
+      protocol: HTTP
+  start: streamlit run app.py --server.port "${PORT}" --server.address 0.0.0.0
+  healthz: /
+
+env:
+  - name: ANTHROPIC_API_KEY
+    value: sk-xxxxxxx  # 여긴 UI에서 설정해도 OK
+
+build:
+  install: pip install -r requirements.txt
+
+context:
+  git:
+    url: https://github.com/Znsim/Claude-Streamlit.git
+    branch: main
